@@ -141,10 +141,37 @@
       color: var(--input-text);
       border: none;
     }
+
+    .time-picker {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      background-color: var(--calendar-bg);
+      border-radius: 8px;
+      box-shadow: var(--calendar-shadow);
+      padding: 10px;
+    }
+
+    .time-picker select {
+      font-size: 16px;
+      padding: 5px;
+      max-height: 50px;
+      overflow-y: auto;
+      background-color: var(--input-bg);
+      color: var(--input-text);
+      border: none;
+    }
   </style>
 </head>
 <body>
+  
   <div class="date-picker">
+    <div class="time-picker">
+      <select class="hour-picker"></select> :
+      <select class="minute-picker"></select>
+    </div>
+
     <div class="calendar">
       <div class="calendar-header">
         <button class="prev-month">&lt;</button>
@@ -289,8 +316,28 @@
       renderCalendar();
     });
 
+    const hourPicker = document.querySelector('.hour-picker');
+    const minutePicker = document.querySelector('.minute-picker');
+
+    for (let i = 0; i < 24; i++) {
+      const option = document.createElement('option');
+      option.value = i;
+      option.text = i.toString().padStart(2, '0');
+      hourPicker.add(option);
+    }
+
+    for (let i = 0; i < 60; i += 1) {
+      const option = document.createElement('option');
+      option.value = i;
+      option.text = i.toString().padStart(2, '0');
+      minutePicker.add(option);
+    }
+
     setButton.addEventListener('click', () => {
-      const ourDate = selectedDate.toLocaleDateString("ru-ru");
+      const selectedHour = hourPicker.value;
+      const selectedMinute = minutePicker.value;
+      const ourDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), selectedHour, selectedMinute).getTime();
+      console.log(ourDate);
       window.Telegram.WebApp.sendData(ourDate);
     });
 
