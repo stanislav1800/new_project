@@ -338,7 +338,7 @@
       const selectedMinute = minutePicker.value;
       const ourDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), selectedHour, selectedMinute).getTime();
       console.log(ourDate);
-      window.Telegram.WebApp.sendData(ourDate);
+      window.Telegram.WebApp.sendData(ourDate.toString());
     });
 
     renderCalendar();
