@@ -318,6 +318,9 @@
 
     const hourPicker = document.querySelector('.hour-picker');
     const minutePicker = document.querySelector('.minute-picker');
+    const now = new Date();
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
 
     for (let i = 0; i < 24; i++) {
       const option = document.createElement('option');
@@ -332,6 +335,10 @@
       option.text = i.toString().padStart(2, '0');
       minutePicker.add(option);
     }
+
+    // Устанавливаем текущее время по умолчанию
+    hourPicker.value = currentHour;
+    minutePicker.value = currentMinute;
 
     setButton.addEventListener('click', () => {
       const selectedHour = hourPicker.value;
